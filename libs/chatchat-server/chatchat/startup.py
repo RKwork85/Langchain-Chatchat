@@ -290,7 +290,12 @@ async def start_main_server():
     manager = mp.Manager()
     run_mode = None
 
-    args, parser = parse_args()
+    # args, parser = parse_args()
+    from argparse import Namespace
+    args = Namespace()
+    args.all_webui = True
+    args.lite = None
+
 
     if args.all_webui:
         args.api = True
@@ -347,7 +352,8 @@ async def start_main_server():
         processes["webui"] = process
 
     if process_count() == 0:
-        parser.print_help()
+        print('我要开大了')
+        parser.print_help()             # 这里是无参数运行程序 时 的代码提示
     else:
         try:
             if p := processes.get("api"):
@@ -391,12 +397,12 @@ def main():
     # 添加这行代码
     cwd = os.getcwd()
     sys.path.append(cwd)
-    multiprocessing.freeze_support()
+    multiprocessing.freeze_support()                # 确保在 Windows 系统上使用多进程时程序能够稳定运行的一个辅助函数
     print("cwd:" + cwd)
     from chatchat.server.knowledge_base.migrate import create_tables
 
     create_tables()
-    if sys.version_info < (3, 10):
+    if sys.version_info < (3, 10):      # 确保无论在哪个Python版本上运行，都能获取或创建一个事件循环
         loop = asyncio.get_event_loop()
     else:
         try:
