@@ -341,6 +341,8 @@ def dialogue_page(
         started = False
 
         client = openai.Client(base_url=f"{api_address()}/chat", api_key="NONE")
+        print("*******************************************")
+        print(client)
         messages = history + [{"role": "user", "content": prompt}]
         tools = list(selected_tool_configs)
         if len(selected_tools) == 1:
@@ -378,6 +380,7 @@ def dialogue_page(
                 chat_box.update_msg("", streaming=False)
                 started = True
 
+            print("经过这里")
             if d.status == AgentStatus.error:
                 st.error(d.choices[0].delta.content)
             elif d.status == AgentStatus.llm_start:

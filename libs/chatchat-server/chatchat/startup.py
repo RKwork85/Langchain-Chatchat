@@ -317,6 +317,7 @@ async def start_main_server():
     dump_server_info(args=args)
 
     if len(sys.argv) > 1:
+        print(sys.argv)
         logger.info(f"正在启动服务：")
         logger.info(f"如需查看 llm_api 日志，请前往 {LOG_PATH}")
 
@@ -325,7 +326,7 @@ async def start_main_server():
     def process_count():
         return len(processes)
 
-    api_started = manager.Event()
+    api_started = manager.Event()       # 通过 manager.Event() 创建的 Event 对象可以在多个进程间共享数据
     if args.api:
         process = Process(
             target=run_api_server,

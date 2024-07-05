@@ -106,4 +106,71 @@ bge-large-zh-v1.5
 
 /home/rkwork/anaconda3/envs/chatchat/lib/python3.10/site-packages/chatchat/webui_pages/dialogue/dialogue.py
 
+3 对话接口地址
 
+http://127.0.0.1:7861/chat/chat/completions
+
+4 接口封装格式
+/home/rkwork/anaconda3/envs/chatchat/lib/python3.10/site-packages/openai/_base_client.py    ln： 1236
+
+```
+    def post(                                       ## Post接口格式
+        self,
+        path: str,
+        *,
+        cast_to: Type[ResponseT],
+        body: Body | None = None,
+        options: RequestOptions = {},
+        files: RequestFiles | None = None,
+        stream: bool = False,
+        stream_cls: type[_StreamT] | None = None,
+    ) -> ResponseT | _StreamT:
+        opts = FinalRequestOptions.construct(
+            method="post", url=path, json_data=body, files=to_httpx_files(files), **options
+        )
+        return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+
+```
+
+5 post接口格式
+/home/rkwork/anaconda3/envs/chatchat/lib/python3.10/site-packages/openai/resources/chat/completions.py      ln: 643
+```
+        return self._post(
+            "/chat/completions",
+            body=maybe_transform(
+                {
+                    "messages": messages,
+                    "model": model,
+                    "frequency_penalty": frequency_penalty,
+                    "function_call": function_call,
+                    "functions": functions,
+                    "logit_bias": logit_bias,
+                    "logprobs": logprobs,
+                    "max_tokens": max_tokens,
+                    "n": n,
+                    "parallel_tool_calls": parallel_tool_calls,
+                    "presence_penalty": presence_penalty,
+                    "response_format": response_format,
+                    "seed": seed,
+                    "service_tier": service_tier,
+                    "stop": stop,
+                    "stream": stream,
+                    "stream_options": stream_options,
+                    "temperature": temperature,
+                    "tool_choice": tool_choice,
+                    "tools": tools,
+                    "top_logprobs": top_logprobs,
+                    "top_p": top_p,
+                    "user": user,
+                },
+                completion_create_params.CompletionCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ChatCompletion,
+            stream=stream or False,
+            stream_cls=Stream[ChatCompletionChunk],
+        )
+
+```
