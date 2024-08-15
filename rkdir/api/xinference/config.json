@@ -1,0 +1,51 @@
+{
+    "version": 1,
+    "context_length": 2048,
+    "model_name": "rkllm",
+    "model_lang": [
+        "en",
+        "zh"
+
+    ],
+    "model_ability": [
+        "chat"
+    ],
+    "model_description": "This is a custom model description.",
+    "model_family": "qwen2-instruct",
+    "model_specs": [
+        {
+            "model_format": "pytorch",
+            "model_size_in_billions": 7,
+            "quantizations": [
+                "4-bit",
+                "8-bit",
+                "none"
+            ],
+            "model_id": null,
+            "model_hub": "huggingface",
+            "model_uri": "/home/rkwork/.cache/rkmodels/qwen2/rkqwen2-7b",       
+            "model_revision": null
+        }
+    ],
+    "prompt_style": {
+        "style_name": "QWEN",
+        "system_prompt": "You are a helpful assistant.",
+        "roles": [
+            "user",
+            "assistant"
+        ],
+        "intra_message_sep": "\n",
+        "inter_message_sep": "",
+        "stop": [
+            "<|endoftext|>",
+            "<|im_start|>",
+            "<|im_end|>"
+        ],
+        "stop_token_ids": [
+            151643,
+            151644,
+            151645
+        ]
+    },
+    "is_builtin": false
+}

@@ -95,6 +95,7 @@ bge-large-zh-v1.5
 
 
 
+
 ## 项目记录
 
 1 embedding模型接口配置文件 ln:121
@@ -174,3 +175,33 @@ http://127.0.0.1:7861/chat/chat/completions
         )
 
 ```
+6 与自定义模型进行对话
+
+1 先使用xinference代码进行模型注册，测试正常部署
+
+2 修改chatchat配置文件
+
+```
+chatchat-config model --set_model_platforms "[{
+    \"platform_name\": \"xinference\",
+    \"platform_type\": \"xinference\",
+    \"api_base_url\": \"http://192.168.1.246:9997/v1\",
+    \"api_key\": \"EMPT\",
+    \"api_concurrencies\": 5,
+    \"llm_models\": [
+        \"rkllm\"
+    ],
+    \"embed_models\": [
+        \"bge-large-zh-v1.5\"
+    ],
+    \"image_models\": [],
+    \"reranking_models\": [],
+    \"speech2text_models\": [],
+    \"tts_models\": []
+}]"
+
+chatchat-config model --default_llm_model rkllm
+```
+3 启动
+
+chatchat -a
